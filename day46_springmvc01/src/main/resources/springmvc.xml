@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+    <context:component-scan base-package="com.itheima"/>
+    <mvc:annotation-driven/>
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <mvc:default-servlet-handler/>
+
+   <!-- 自己的异常处理器-->
+    <!-- <bean class="com.itheima.exception.MyExceptionResolver"/>-->
+
+    <!--配置springmvc的简单异常处理器-->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <!--设置一个通用的异常页面-->
+        <property name="defaultErrorView" value="error02"/>
+        
+        <!--设置特定的异常页面， 当出现了特有的异常，那么就会执行下面的映射方式，而不是上面的通用设置-->
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.lang.NullPointerException">error02_null</prop>
+                <prop key="java.lang.ClassCastException">error02_cast</prop>
+            </props>
+        </property>
+    </bean>
+</beans>
